@@ -183,19 +183,17 @@ class AgreementWrapper {
     return this.agreement.closeEvidencePeriod(disputeId)
   }
 
-  async executeRuling({ actionId, ruling, mockRuling = true }) {
+  async resolveRuling({ actionId, ruling, mockRuling = true }) {
     const { lastChallengeId } = await this.getAction(actionId)
     const { state, disputeId } = await this.getChallenge(lastChallengeId)
 
     if (mockRuling) {
       const ArbitratorMock = this._getContract('ArbitratorMock')
       const arbitrator = await ArbitratorMock.at(this.arbitrator.address)
-      await arbitrator.rule(disputeId, ruling)
+      await arbitrator.setRuling(disputeId, ruling)
     }
 
-    return (state.toString() != CHALLENGES_STATE.WAITING && state.toString() != CHALLENGES_STATE.SETTLED)
-      ? this.arbitrator.executeRuling(disputeId)
-      : this.agreement.rule(disputeId, ruling)
+    return this.agreement.resolve(disputeId)
   }
 
   async activate({ disputable, collateralToken, actionCollateral, challengeCollateral, challengeDuration, from = undefined }) {

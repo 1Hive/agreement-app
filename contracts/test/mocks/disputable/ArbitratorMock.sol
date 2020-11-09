@@ -9,6 +9,7 @@ import "../../../arbitration/IAragonAppFeesCashier.sol";
 
 contract ArbitratorMock is IArbitrator {
     string internal constant ERROR_DISPUTE_NOT_RULED_YET = "ARBITRATOR_DISPUTE_NOT_RULED_YET";
+    string internal constant ERROR_SUBMITTER_NOT_ARBITRABLE = "ARBITRATOR_SUBMITTER_NOT_ARBITRABLE";
     string internal constant ERROR_CLOSE_EVIDENCE_PERIOD_FAILED = "ARBITRATOR_CLOSE_EVIDENCE_PERIOD_FAILED";
     string internal constant ERROR_DISPUTE_EVIDENCE_PERIOD_ALREADY_CLOSED = "ARBITRATOR_DISPUTE_EVIDENCE_PERIOD_ALREADY_CLOSED";
 
@@ -31,6 +32,7 @@ contract ArbitratorMock is IArbitrator {
     mapping (uint256 => Dispute) public disputes;
 
     event NewDispute(uint256 disputeId, uint256 possibleRulings, bytes metadata);
+    event EvidenceSubmitted(uint256 indexed disputeId, address indexed submitter, bytes evidence);
     event EvidencePeriodClosed(uint256 indexed disputeId);
 
     constructor(ERC20 _feeToken, uint256 _feeAmount) public {
@@ -49,6 +51,12 @@ contract ArbitratorMock is IArbitrator {
         return disputeId;
     }
 
+    function submitEvidence(uint256 _disputeId, address _submitter, bytes _evidence) external {
+        Dispute storage dispute = disputes[_disputeId];
+        require(dispute.arbitrable == msg.sender, ERROR_SUBMITTER_NOT_ARBITRABLE);
+        emit EvidenceSubmitted(_disputeId, _submitter, _evidence);
+    }
+
     function closeEvidencePeriod(uint256 _disputeId) external {
         require(!closeEvidencePeriodFail, ERROR_CLOSE_EVIDENCE_PERIOD_FAILED);
 
@@ -59,13 +67,13 @@ contract ArbitratorMock is IArbitrator {
         emit EvidencePeriodClosed(_disputeId);
     }
 
-    function executeRuling(uint256 _disputeId) external {
+    function rule(uint256 _disputeId) external returns (address subject, uint256 ruling) {
         Dispute storage dispute = disputes[_disputeId];
         require(dispute.ruling != 0, ERROR_DISPUTE_NOT_RULED_YET);
-        dispute.arbitrable.rule(_disputeId, dispute.ruling);
+        return (dispute.arbitrable, dispute.ruling);
     }
 
-    function rule(uint256 _disputeId, uint8 _ruling) external {
+    function setRuling(uint256 _disputeId, uint8 _ruling) external {
         Dispute storage dispute = disputes[_disputeId];
         dispute.ruling = _ruling;
     }

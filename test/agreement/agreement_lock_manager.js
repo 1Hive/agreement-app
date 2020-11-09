@@ -65,7 +65,7 @@ contract('Agreement', ([_, owner, submitter, challenger, someone]) => {
       })
 
       it('after ruling', async () => {
-        await disputable.executeRuling({ actionId, ruling: RULINGS.REFUSED })
+        await disputable.resolveRuling({ actionId, ruling: RULINGS.REFUSED })
         await cannotUnlock()
       })
 

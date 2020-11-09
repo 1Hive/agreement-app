@@ -88,7 +88,7 @@ contract('Agreement', ([_, challenger, holder0, holder1, holder2, holder3, holde
         const { state } = await disputable.getChallenge(challengeId)
         assert.equal(state, CHALLENGES_STATE.DISPUTED, `action ${id} is not disputed`)
 
-        await disputable.executeRuling({ actionId: id, ruling })
+        await disputable.resolveRuling({ actionId: id, ruling })
         const { ruling: actualRuling } = await disputable.getChallenge(challengeId)
         assertBn(actualRuling, ruling, `action ${id} is not ruled`)
       }

@@ -468,8 +468,8 @@ contract Agreement is IArbitrable, ILockManager, IAgreement, IACLOracle, AragonA
         bytes memory metadata = abi.encodePacked(appId(), action.lastChallengeId);
         uint256 disputeId = _createDispute(action, challenge, arbitrator, metadata);
         bool challengerFinishedEvidence = challenge.challengerFinishedEvidence;
-        _submitEvidence(arbitrator, disputeId, submitter, action.context, _submitterFinishedEvidence);
-        _submitEvidence(arbitrator, disputeId, challenge.challenger, challenge.context, challengerFinishedEvidence);
+        arbitrator.submitEvidence(disputeId, submitter, action.context);
+        arbitrator.submitEvidence(disputeId, challenge.challenger, challenge.context);
 
         if (_submitterFinishedEvidence && challengerFinishedEvidence) {
             // Try-catch for: arbitrator.closeEvidencePeriod(disputeId);
@@ -501,12 +501,12 @@ contract Agreement is IArbitrable, ILockManager, IAgreement, IACLOracle, AragonA
         if (msg.sender == action.submitter) {
             // If the submitter finished submitting evidence earlier, also emit this event as finished
             bool submitterFinishedEvidence = challenge.submitterFinishedEvidence || _finished;
-            _submitEvidence(arbitrator, _disputeId, msg.sender, _evidence, submitterFinishedEvidence);
+            arbitrator.submitEvidence(_disputeId, msg.sender, _evidence);
             challenge.submitterFinishedEvidence = submitterFinishedEvidence;
         } else if (msg.sender == challenge.challenger) {
             // If the challenger finished submitting evidence earlier, also emit this event as finished
             bool challengerFinishedEvidence = challenge.challengerFinishedEvidence || _finished;
-            _submitEvidence(arbitrator, _disputeId, msg.sender, _evidence, challengerFinishedEvidence);
+            arbitrator.submitEvidence(_disputeId, msg.sender, _evidence);
             challenge.challengerFinishedEvidence = challengerFinishedEvidence;
         } else {
             revert(ERROR_SENDER_NOT_ALLOWED);
@@ -529,25 +529,24 @@ contract Agreement is IArbitrable, ILockManager, IAgreement, IACLOracle, AragonA
     }
 
     /**
-    * @notice Rule the action associated to dispute #`_disputeId` with ruling `_ruling`
-    * @dev Can only be called once per challenge by the associated abitrator.
+    * @notice Resolve the action associated to dispute #`_disputeId` with ruling `_ruling`
+    * @dev Can only be called once per challenge by anyone once the arbitrator ruling has been finalized.
     *      Initialization check is implicitly provided by `_getDisputedAction()` as disputable actions can only be created via `newAction()`.
     * @param _disputeId Identification number of the dispute on the arbitrator
-    * @param _ruling Ruling given by the arbitrator
     */
-    function rule(uint256 _disputeId, uint256 _ruling) external {
+    function resolve(uint256 _disputeId) external {
         (uint256 actionId, Action storage action, uint256 challengeId, Challenge storage challenge) = _getDisputedAction(_disputeId);
         require(_isDisputed(challenge), ERROR_CANNOT_RULE_ACTION);
 
         IArbitrator arbitrator = _getArbitratorFor(action);
-        require(arbitrator == IArbitrator(msg.sender), ERROR_SENDER_NOT_ALLOWED);
+        (, uint256 ruling) = arbitrator.rule(_disputeId);
 
-        challenge.ruling = _ruling;
-        emit Ruled(arbitrator, _disputeId, _ruling);
+        challenge.ruling = ruling;
+        emit Ruled(arbitrator, _disputeId, ruling);
 
-        if (_ruling == DISPUTES_RULING_SUBMITTER) {
+        if (ruling == DISPUTES_RULING_SUBMITTER) {
             _acceptAction(actionId, action, challengeId, challenge);
-        } else if (_ruling == DISPUTES_RULING_CHALLENGER) {
+        } else if (ruling == DISPUTES_RULING_CHALLENGER) {
             _rejectAction(actionId, action, challengeId, challenge);
         } else {
             _voidAction(actionId, action, challengeId, challenge);
@@ -1037,20 +1036,6 @@ contract Agreement is IArbitrable, ILockManager, IAgreement, IACLOracle, AragonA
         uint256 disputeId = _arbitrator.createDispute(DISPUTES_POSSIBLE_OUTCOMES, _metadata);
 
         return disputeId;
-    }
-
-    /**
-    * @dev Submit evidence for a dispute on an arbitrator
-    * @param _arbitrator Arbitrator to submit evidence on
-    * @param _disputeId Identification number of the dispute on the arbitrator
-    * @param _submitter Address submitting the evidence
-    * @param _evidence Evidence data to be submitted
-    * @param _finished Whether the submitter is now finished submitting evidence
-    */
-    function _submitEvidence(IArbitrator _arbitrator, uint256 _disputeId, address _submitter, bytes _evidence, bool _finished) internal {
-        if (_evidence.length > 0) {
-            emit EvidenceSubmitted(_arbitrator, _disputeId, _submitter, _evidence, _finished);
-        }
     }
 
     /**
