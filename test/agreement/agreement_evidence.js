@@ -1,6 +1,7 @@
 const deployer = require('../helpers/utils/deployer')(web3, artifacts)
 const { RULINGS } = require('../helpers/utils/enums')
 const { AGREEMENT_ERRORS } = require('../helpers/utils/errors')
+const ArbitratorMock = artifacts.require('ArbitratorMock')
 
 const { injectWeb3, injectArtifacts } = require('@aragon/contract-helpers-test')
 const { assertBn, assertRevert, assertEvent, assertAmountOfEvents } = require('@aragon/contract-helpers-test/src/asserts')
@@ -110,8 +111,8 @@ contract('Agreement', ([_, someone, submitter, challenger]) => {
                         const { disputeId } = await disputable.getChallenge(challengeId)
                         const receipt = await disputable.submitEvidence({ actionId, evidence, from, finished: currentlyFinished })
 
-                        assertAmountOfEvents(receipt, 'EvidenceSubmitted')
-                        assertEvent(receipt, 'EvidenceSubmitted', { expectedArgs: { disputeId, submitter: from, evidence, finished: hasFinished } })
+                        assertAmountOfEvents(receipt, 'EvidenceSubmitted', { decodeForAbi: ArbitratorMock.abi })
+                        assertEvent(receipt, 'EvidenceSubmitted', { expectedArgs: { disputeId, submitter: from, evidence }, decodeForAbi: ArbitratorMock.abi })
                       })
 
                       it('can be ruled', async () => {
@@ -228,7 +229,7 @@ contract('Agreement', ([_, someone, submitter, challenger]) => {
                 context('when the dispute was ruled', () => {
                   context('when the dispute was refused', () => {
                     beforeEach('rule action', async () => {
-                      await disputable.executeRuling({ actionId, ruling: RULINGS.REFUSED })
+                      await disputable.resolveRuling({ actionId, ruling: RULINGS.REFUSED })
                     })
 
                     context('when the action was not closed', () => {
@@ -246,7 +247,7 @@ contract('Agreement', ([_, someone, submitter, challenger]) => {
 
                   context('when the dispute was ruled in favor the submitter', () => {
                     beforeEach('rule action', async () => {
-                      await disputable.executeRuling({ actionId, ruling: RULINGS.IN_FAVOR_OF_SUBMITTER })
+                      await disputable.resolveRuling({ actionId, ruling: RULINGS.IN_FAVOR_OF_SUBMITTER })
                     })
 
                     context('when the action was not closed', () => {
@@ -264,7 +265,7 @@ contract('Agreement', ([_, someone, submitter, challenger]) => {
 
                   context('when the dispute was ruled in favor the challenger', () => {
                     beforeEach('rule action', async () => {
-                      await disputable.executeRuling({ actionId, ruling: RULINGS.IN_FAVOR_OF_CHALLENGER })
+                      await disputable.resolveRuling({ actionId, ruling: RULINGS.IN_FAVOR_OF_CHALLENGER })
                     })
 
                     itCannotSubmitEvidence()

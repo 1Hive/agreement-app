@@ -257,7 +257,7 @@ contract('Agreement', ([_, submitter, challenger, someone]) => {
                   context('when the dispute was ruled', () => {
                     context('when the dispute was refused', () => {
                       beforeEach('rule action', async () => {
-                        await disputable.executeRuling({ actionId, ruling: RULINGS.REFUSED })
+                        await disputable.resolveRuling({ actionId, ruling: RULINGS.REFUSED })
                       })
 
                       context('when the action was not closed', () => {
@@ -275,7 +275,7 @@ contract('Agreement', ([_, submitter, challenger, someone]) => {
 
                     context('when the dispute was ruled in favor the submitter', () => {
                       beforeEach('rule action', async () => {
-                        await disputable.executeRuling({ actionId, ruling: RULINGS.IN_FAVOR_OF_SUBMITTER })
+                        await disputable.resolveRuling({ actionId, ruling: RULINGS.IN_FAVOR_OF_SUBMITTER })
                       })
 
                       context('when the action was not closed', () => {
@@ -293,7 +293,7 @@ contract('Agreement', ([_, submitter, challenger, someone]) => {
 
                     context('when the dispute was ruled in favor the challenger', () => {
                       beforeEach('rule action', async () => {
-                        await disputable.executeRuling({ actionId, ruling: RULINGS.IN_FAVOR_OF_CHALLENGER })
+                        await disputable.resolveRuling({ actionId, ruling: RULINGS.IN_FAVOR_OF_CHALLENGER })
                       })
 
                       itCannotBeChallenged()

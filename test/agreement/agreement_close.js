@@ -254,7 +254,7 @@ contract('Agreement', ([_, submitter]) => {
                     const unlocksBalance = true
 
                     beforeEach('rule action', async () => {
-                      await disputable.executeRuling({ actionId, ruling: RULINGS.REFUSED })
+                      await disputable.resolveRuling({ actionId, ruling: RULINGS.REFUSED })
                     })
 
                     context('when the action was closed', () => {
@@ -274,7 +274,7 @@ contract('Agreement', ([_, submitter]) => {
                     const unlocksBalance = true
 
                     beforeEach('rule action', async () => {
-                      await disputable.executeRuling({ actionId, ruling: RULINGS.IN_FAVOR_OF_SUBMITTER })
+                      await disputable.resolveRuling({ actionId, ruling: RULINGS.IN_FAVOR_OF_SUBMITTER })
                     })
 
                     context('when the action was closed', () => {
@@ -293,7 +293,7 @@ contract('Agreement', ([_, submitter]) => {
 
                   context('when the dispute was ruled in favor the challenger', () => {
                     beforeEach('rule action', async () => {
-                      await disputable.executeRuling({ actionId, ruling: RULINGS.IN_FAVOR_OF_CHALLENGER })
+                      await disputable.resolveRuling({ actionId, ruling: RULINGS.IN_FAVOR_OF_CHALLENGER })
                     })
 
                     itIgnoresTheRequest()
