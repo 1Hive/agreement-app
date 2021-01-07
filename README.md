@@ -11,3 +11,7 @@ The Agreement app is still in development phase and aspects of the mechanism are
 #### ⚠️ Security review status: pre-audit
 
 The code in this sub-repo is under heavy development and hasn't undergone a professional security review yet, therefore we cannot recommend using any of the code at the moment.
+
+#### Note on calling permissioned functions from Disputable Voting
+Disputable Voting blacklists the Agreement contract from being called in order to prevent votes from closing actions on the Agreements app that is shouldn't.
+In order to call permissioned functions on the Agreement via vote, a separate contract that hard codes the call will need to be created which, in a single vote, can be granted the appropriate permission, called and have the permission removed.
