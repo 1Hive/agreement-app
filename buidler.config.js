@@ -20,6 +20,12 @@ module.exports = {
       gasLimit: 6000000000,
       defaultBalanceEther: 100
     },
+    xdai: {
+      url: 'https://dai.poa.network',
+      accounts: ACCOUNTS,
+      gasPrice: 1000000000,
+      gas: 12000000,
+    },
     // Local development network to test coverage. Solidity coverage
     // pluging launches its own in-process ganache server.
     // and expose it at port 8555.

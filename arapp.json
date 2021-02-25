@@ -18,8 +18,8 @@
     },
     "xdai": {
       "registry": "0xaafca6b0c89521752e559650206d7c925fd0e530",
-      "appName": "agreement-1hive.open.aragonpm.eth",
-      "network": "rinkeby"
+      "appName": "agreement.open.aragonpm.eth",
+      "network": "xdai"
     },
     "ropsten": {
       "registry": "0x6afe2cacee211ea9179992f89dc61ff25c61e923",
