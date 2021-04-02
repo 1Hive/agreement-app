@@ -43,12 +43,15 @@ contract CollateralRequirementUpdater {
         for (uint256 i = 0; i < disputableApps.length; i++) {
             DisputableAragonApp disputableAragonApp = disputableApps[i];
             (, uint256 currentCollateralRequirementId) = agreement.getDisputableInfo(disputableAragonApp);
-            (ERC20 collateralToken, uint64 challengeDuration,,) = agreement.getCollateralRequirement(disputableAragonApp, currentCollateralRequirementId);
+            (ERC20 collateralToken, uint64 challengeDuration, uint256 actionAmount, uint256 challengeAmount)
+                = agreement.getCollateralRequirement(disputableAragonApp, currentCollateralRequirementId);
 
             require(collateralToken == collateralTokens[i], "ERROR: Collateral tokens do not match");
 
             uint256 actionAmountVariable = priceOracle.consult(stableToken, actionAmountsStable[i], collateralToken);
             uint256 challengeAmountVariable = priceOracle.consult(stableToken, challengeAmountsStable[i], collateralToken);
+
+            require(actionAmount != actionAmountVariable || challengeAmount != challengeAmountVariable, "ERROR: No update needed");
 
             agreement.changeCollateralRequirement(disputableAragonApp, collateralToken, challengeDuration,
                 actionAmountVariable, challengeAmountVariable);

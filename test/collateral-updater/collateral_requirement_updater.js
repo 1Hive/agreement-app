@@ -8,8 +8,8 @@ const PriceOracleMock = artifacts.require('PriceOracleMock')
 contract('CollateralRequirementUpdater', ([owner]) => {
 
   let priceOracle, stableToken, collateralRequirementUpdater
-  const actionAmountStable = bigExp(100, 18) // 100 dai
-  const challengeAmountStable = bigExp(200, 18) // 100 dai
+  const actionAmountStable = bigExp(200, 18) // 100 dai
+  const challengeAmountStable = bigExp(300, 18) // 100 dai
   const stablePricePerToken = bn(1000)
 
   beforeEach(async () => {
@@ -18,7 +18,8 @@ contract('CollateralRequirementUpdater', ([owner]) => {
     stableToken = await deployer.deployToken({})
   })
 
-  describe.only("constructor", () => {
+  describe("constructor", () => {
+    
     beforeEach(async () => {
       collateralRequirementUpdater = await CollateralRequirementUpdater.new(deployer.agreement.address, [deployer.disputable.address],
         [deployer.collateralToken.address], [actionAmountStable], [challengeAmountStable], priceOracle.address, stableToken.address)
@@ -55,7 +56,7 @@ contract('CollateralRequirementUpdater', ([owner]) => {
     })
 
     describe("updateCollateralRequirements()", () => {
-      it('updates collateral requirements for disputable app on agreement', async () => {
+      it('updates collateral requirements', async () => {
         await collateralRequirementUpdater.updateCollateralRequirements()
         const { currentCollateralRequirementId: collateralRequirementIdAfter } = await deployer.agreement.getDisputableInfo(deployer.disputable.address)
         const {
@@ -72,7 +73,7 @@ contract('CollateralRequirementUpdater', ([owner]) => {
       })
 
       it('reverts when incorrect collateral token received', async () => {
-        collateralRequirementUpdater = await CollateralRequirementUpdater.new(deployer.agreement.address, [deployer.disputable.address],
+        const collateralRequirementUpdater = await CollateralRequirementUpdater.new(deployer.agreement.address, [deployer.disputable.address],
           [deployer.disputable.address], [actionAmountStable], [challengeAmountStable], priceOracle.address, stableToken.address)
         const manageDisputableRole = await deployer.agreement.MANAGE_DISPUTABLE_ROLE()
         await deployer.acl.grantPermission(collateralRequirementUpdater.address, deployer.agreement.address, manageDisputableRole)
@@ -80,6 +81,10 @@ contract('CollateralRequirementUpdater', ([owner]) => {
         await assertRevert(collateralRequirementUpdater.updateCollateralRequirements(), "ERROR: Collateral tokens do not match")
       })
 
+      it('reverts when already updated', async () => {
+        await collateralRequirementUpdater.updateCollateralRequirements()
+        await assertRevert(collateralRequirementUpdater.updateCollateralRequirements(), "ERROR: No update needed")
+      })
     })
   })
 
