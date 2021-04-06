@@ -8,8 +8,8 @@ const PriceOracleMock = artifacts.require('PriceOracleMock')
 contract('CollateralRequirementUpdater', ([owner]) => {
 
   let priceOracle, stableToken, collateralRequirementUpdater
-  const actionAmountStable = bigExp(200, 18) // 100 dai
-  const challengeAmountStable = bigExp(300, 18) // 100 dai
+  const actionAmountStable = bigExp(200, 18) // 200 dai
+  const challengeAmountStable = bigExp(300, 18) // 300 dai
   const stablePricePerToken = bn(1000)
 
   beforeEach(async () => {
