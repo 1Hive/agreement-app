@@ -1,9 +1,10 @@
 pragma solidity ^0.4.24;
 
+import "openzeppelin-solidity/contracts/ownership/Ownable.sol";
 import "../Agreement.sol";
 import "./PriceOracle.sol";
 
-contract CollateralRequirementUpdater {
+contract CollateralRequirementUpdater is Ownable {
 
     uint256 constant public MAX_DISPUTABLE_APPS = 10;
 
@@ -14,6 +15,9 @@ contract CollateralRequirementUpdater {
     uint256[] public challengeAmountsStable;
     PriceOracle public priceOracle;
     address public stableToken;
+
+    event CollateralRequirementsUpdated();
+    event ActionAndChallengeAmountsUpdated();
 
     constructor(
         Agreement _agreement,
@@ -56,5 +60,20 @@ contract CollateralRequirementUpdater {
             agreement.changeCollateralRequirement(disputableAragonApp, collateralToken, challengeDuration,
                 actionAmountVariable, challengeAmountVariable);
         }
+
+        emit CollateralRequirementsUpdated();
+    }
+
+    function updateActionAndChallengeAmount(
+        uint256[] _actionAmountsStable,
+        uint256[] _challengeAmountsStable
+    ) external onlyOwner {
+        require(_actionAmountsStable.length == _challengeAmountsStable.length
+        && _actionAmountsStable.length == actionAmountsStable.length, "ERROR: Inconsistently sized arrays");
+
+        actionAmountsStable = _actionAmountsStable;
+        challengeAmountsStable = _challengeAmountsStable;
+
+        emit ActionAndChallengeAmountsUpdated();
     }
 }

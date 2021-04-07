@@ -19,7 +19,7 @@ contract('CollateralRequirementUpdater', ([owner]) => {
   })
 
   describe("constructor", () => {
-    
+
     beforeEach(async () => {
       collateralRequirementUpdater = await CollateralRequirementUpdater.new(deployer.agreement.address, [deployer.disputable.address],
         [deployer.collateralToken.address], [actionAmountStable], [challengeAmountStable], priceOracle.address, stableToken.address)
@@ -84,6 +84,21 @@ contract('CollateralRequirementUpdater', ([owner]) => {
       it('reverts when already updated', async () => {
         await collateralRequirementUpdater.updateCollateralRequirements()
         await assertRevert(collateralRequirementUpdater.updateCollateralRequirements(), "ERROR: No update needed")
+      })
+    })
+
+    describe("updateActionAndChallengeAmount(actionAmountsStable, challengeAmountsStable)", () => {
+      it('updates the stable amounts', async () => {
+        const actionAmount = bn(1)
+        const challengeAmount = bn(1)
+        await collateralRequirementUpdater.updateActionAndChallengeAmount([actionAmount], [challengeAmount])
+
+        assertBn(await collateralRequirementUpdater.actionAmountsStable(0), actionAmount, "Incorrect action amount")
+        assertBn(await collateralRequirementUpdater.challengeAmountsStable(0), challengeAmount, "Incorrect challenge amount")
+      })
+
+      it('reverts with incorrect length arrays', async () => {
+        await assertRevert(collateralRequirementUpdater.updateActionAndChallengeAmount([1, 2], [1, 2]), "ERROR: Inconsistently sized arrays")
       })
     })
   })
