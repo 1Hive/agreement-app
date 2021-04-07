@@ -5,7 +5,7 @@ const { assertBn, assertRevert } = require('@aragon/contract-helpers-test/src/as
 const CollateralRequirementUpdater = artifacts.require('CollateralRequirementUpdater')
 const PriceOracleMock = artifacts.require('PriceOracleMock')
 
-contract('CollateralRequirementUpdater', ([owner]) => {
+contract('CollateralRequirementUpdater', ([owner, notOwner]) => {
 
   let priceOracle, stableToken, collateralRequirementUpdater
   const actionAmountStable = bigExp(200, 18) // 200 dai
@@ -99,6 +99,10 @@ contract('CollateralRequirementUpdater', ([owner]) => {
 
       it('reverts with incorrect length arrays', async () => {
         await assertRevert(collateralRequirementUpdater.updateActionAndChallengeAmount([1, 2], [1, 2]), "ERROR: Inconsistently sized arrays")
+      })
+
+      it('reverts when called from non owner address', async () => {
+        await assertRevert(collateralRequirementUpdater.updateActionAndChallengeAmount([1], [1], { from: notOwner }))
       })
     })
   })
