@@ -3,7 +3,7 @@ pragma solidity 0.4.24;
 import "@aragon/os/contracts/apps/disputable/DisputableAragonApp.sol";
 import "@aragon/os/contracts/forwarding/IForwarderWithContext.sol";
 import "@aragon/os/contracts/lib/math/SafeMath64.sol";
-import "@aragon/contract-helpers-test/contracts/0.4/aragonOS/SharedTimeHelpersMock.sol";
+import "@1hive/contract-helpers-test/contracts/0.4/aragonOS/SharedTimeHelpersMock.sol";
 
 
 contract DisputableAppMock is IForwarderWithContext, DisputableAragonApp, SharedTimeHelpersMock {

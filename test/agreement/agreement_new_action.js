@@ -3,8 +3,8 @@ const { AGREEMENT_EVENTS, APP_FEES_CASHIER_EVENTS } = require('../helpers/utils/
 const { AGREEMENT_ERRORS, DISPUTABLE_ERRORS, STAKING_ERRORS } = require('../helpers/utils/errors')
 
 const { padLeft, toHex } = require('web3-utils')
-const { bn, bigExp, injectWeb3, injectArtifacts } = require('@aragon/contract-helpers-test')
-const { assertBn, assertRevert, assertAmountOfEvents, assertEvent } = require('@aragon/contract-helpers-test/src/asserts')
+const { bn, bigExp, injectWeb3, injectArtifacts } = require('@1hive/contract-helpers-test')
+const { assertBn, assertRevert, assertAmountOfEvents, assertEvent } = require('@1hive/contract-helpers-test/src/asserts')
 
 injectWeb3(web3)
 injectArtifacts(artifacts)

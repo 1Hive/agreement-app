@@ -1,8 +1,8 @@
 const deployer = require('../helpers/utils/deployer')(web3, artifacts)
 const { CHALLENGES_STATE, RULINGS } = require('../helpers/utils/enums')
 
-const { assertBn } = require('@aragon/contract-helpers-test/src/asserts')
-const { bn, bigExp } = require('@aragon/contract-helpers-test')
+const { assertBn } = require('@1hive/contract-helpers-test/src/asserts')
+const { bn, bigExp } = require('@1hive/contract-helpers-test')
 
 contract('Agreement', ([_, challenger, holder0, holder1, holder2, holder3, holder4, holder5]) => {
   let disputable, collateralToken

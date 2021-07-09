@@ -1,8 +1,8 @@
 const deployer = require('../helpers/utils/deployer')(web3, artifacts)
 
 const { sha3 } = require('web3-utils')
-const { bn, bigExp } = require('@aragon/contract-helpers-test')
-const { ANY_ENTITY } = require('@aragon/contract-helpers-test/src/aragon-os')
+const { bn, bigExp } = require('@1hive/contract-helpers-test')
+const { ANY_ENTITY } = require('@1hive/contract-helpers-test/src/aragon-os')
 
 const TokenBalanceOracle = artifacts.require('TokenBalanceOracle')
 

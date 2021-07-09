@@ -2,8 +2,8 @@ const deployer = require('../helpers/utils/deployer')(web3, artifacts)
 const { AGREEMENT_EVENTS } = require('../helpers/utils/events')
 const { ARAGON_OS_ERRORS, AGREEMENT_ERRORS } = require('../helpers/utils/errors')
 
-const { ZERO_ADDRESS, bigExp, injectWeb3, injectArtifacts } = require('@aragon/contract-helpers-test')
-const { assertBn, assertEvent, assertRevert } = require('@aragon/contract-helpers-test/src/asserts')
+const { ZERO_ADDRESS, bigExp, injectWeb3, injectArtifacts } = require('@1hive/contract-helpers-test')
+const { assertBn, assertEvent, assertRevert } = require('@1hive/contract-helpers-test/src/asserts')
 
 injectWeb3(web3)
 injectArtifacts(artifacts)

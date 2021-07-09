@@ -3,8 +3,8 @@ const { AGREEMENT_ERRORS } = require('../helpers/utils/errors')
 const { CHALLENGES_STATE, RULINGS } = require('../helpers/utils/enums')
 const { AGREEMENT_EVENTS, DISPUTABLE_EVENTS } = require('../helpers/utils/events')
 
-const { bn, bigExp, injectWeb3, injectArtifacts } = require('@aragon/contract-helpers-test')
-const { assertBn, assertRevert, assertEvent, assertAmountOfEvents } = require('@aragon/contract-helpers-test/src/asserts')
+const { bn, bigExp, injectWeb3, injectArtifacts } = require('@1hive/contract-helpers-test')
+const { assertBn, assertRevert, assertEvent, assertAmountOfEvents } = require('@1hive/contract-helpers-test/src/asserts')
 
 injectWeb3(web3)
 injectArtifacts(artifacts)
