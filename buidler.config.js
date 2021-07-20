@@ -26,6 +26,16 @@ module.exports = {
       gasPrice: 1000000000,
       gas: 12000000,
     },
+    arbtest: {
+      url: 'https://rinkeby.arbitrum.io/rpc',
+      accounts: [process.env.ETH_KEY],
+      gasPrice: 0,
+    },
+    arbitrum: {
+      url: 'https://arb1.arbitrum.io/rpc',
+      accounts: [process.env.ETH_KEY],
+      gasPrice: 0,
+    },
     // Local development network to test coverage. Solidity coverage
     // pluging launches its own in-process ganache server.
     // and expose it at port 8555.
@@ -55,7 +65,7 @@ module.exports = {
     optimizer: {
       enabled: true,
       // Any more and the contract goes over the size limit
-      runs: 1000,
+      runs: 20000, // Set to 1000 for byte size restricted network (not Arbitrum)
     },
   },
   // The gas reporter plugin do not properly handle the buidlerevm
