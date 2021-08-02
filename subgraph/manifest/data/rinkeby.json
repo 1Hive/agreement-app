@@ -1,0 +1,23 @@
+{
+  "network": "rinkeby",
+  "dataSources": {
+    "Organizations": [],
+    "OrganizationFactories": [
+      {
+        "name": "DAOFactory",
+        "address": "0xad4d106b43b480faa3ef7f98464ffc27fc1faa96",
+        "startBlock": "5026118"
+      }
+    ],
+    "OrganizationTemplates": [
+      {
+        "name": "gardens-template@1.0.0",
+        "address": "0x6A03abA06b65f6bcF637b60D47dbBce940756d5b",
+        "startBlock": 8386353
+      }
+    ],
+    "LegacyOrganizationTemplates": [],
+    "TokenFactories": [],
+    "Tokens": []
+  }
+}
