@@ -1,6 +1,6 @@
 const deployer = require('../helpers/utils/deployer')(web3, artifacts)
 
-const { ZERO_ADDRESS } = require('@aragon/contract-helpers-test')
+const { ZERO_ADDRESS } = require('@1hive/contract-helpers-test')
 
 const AppFeesCashier = artifacts.require('AragonAppFeesCashierMock')
 

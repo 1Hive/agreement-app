@@ -2,9 +2,9 @@ const deployer = require('../helpers/utils/deployer')(web3, artifacts)
 const { AGREEMENT_ERRORS } = require('../helpers/utils/errors')
 const { AGREEMENT_EVENTS } = require('../helpers/utils/events')
 
-const { ANY_ENTITY } = require('@aragon/contract-helpers-test/src/aragon-os')
-const { bn, injectWeb3, injectArtifacts } = require('@aragon/contract-helpers-test')
-const { assertBn, assertRevert, assertAmountOfEvents, assertEvent } = require('@aragon/contract-helpers-test/src/asserts')
+const { ANY_ENTITY } = require('@1hive/contract-helpers-test/src/aragon-os')
+const { bn, injectWeb3, injectArtifacts } = require('@1hive/contract-helpers-test')
+const { assertBn, assertRevert, assertAmountOfEvents, assertEvent } = require('@1hive/contract-helpers-test/src/asserts')
 
 injectWeb3(web3)
 injectArtifacts(artifacts)

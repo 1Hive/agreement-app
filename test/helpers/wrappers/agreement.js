@@ -2,7 +2,7 @@ const { CHALLENGES_STATE } = require('../utils/enums')
 const { AGREEMENT_EVENTS } = require('../utils/events')
 const { AGREEMENT_ERRORS } = require('../utils/errors')
 
-const { ZERO_ADDRESS, EMPTY_BYTES, bn, getEventArgument } = require('@aragon/contract-helpers-test')
+const { ZERO_ADDRESS, EMPTY_BYTES, bn, getEventArgument } = require('@1hive/contract-helpers-test')
 
 class AgreementWrapper {
   constructor(artifacts, web3, agreement, arbitrator, stakingFactory, clock) {

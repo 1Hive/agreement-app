@@ -5,8 +5,8 @@ const { RULINGS, CHALLENGES_STATE } = require('../helpers/utils/enums')
 const ArbitratorMock = artifacts.require('ArbitratorMock')
 
 const { padLeft } = require('web3-utils')
-const { bn, bigExp, getEventArgument, injectWeb3, injectArtifacts } = require('@aragon/contract-helpers-test')
-const { assertBn, assertRevert, assertEvent, assertAmountOfEvents } = require('@aragon/contract-helpers-test/src/asserts')
+const { bn, bigExp, getEventArgument, injectWeb3, injectArtifacts } = require('@1hive/contract-helpers-test')
+const { assertBn, assertRevert, assertEvent, assertAmountOfEvents } = require('@1hive/contract-helpers-test/src/asserts')
 
 injectWeb3(web3)
 injectArtifacts(artifacts)

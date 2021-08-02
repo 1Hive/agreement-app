@@ -2,8 +2,8 @@ const AgreementWrapper = require('../wrappers/agreement')
 const DisputableWrapper = require('../wrappers/disputable')
 
 const { utf8ToHex } = require('web3-utils')
-const { ANY_ENTITY, getInstalledApp } = require('@aragon/contract-helpers-test/src/aragon-os')
-const { ZERO_ADDRESS, NOW, ONE_DAY, bigExp, bn, getEventArgument } = require('@aragon/contract-helpers-test')
+const { ANY_ENTITY, getInstalledApp } = require('@1hive/contract-helpers-test/src/aragon-os')
+const { ZERO_ADDRESS, NOW, ONE_DAY, bigExp, bn, getEventArgument } = require('@1hive/contract-helpers-test')
 
 
 const DEFAULT_AGREEMENT_INITIALIZATION_PARAMS = {

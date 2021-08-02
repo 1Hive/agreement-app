@@ -2,8 +2,8 @@ const deployer = require('../helpers/utils/deployer')(web3, artifacts)
 const { AGREEMENT_EVENTS } = require('../helpers/utils/events')
 const { ARAGON_OS_ERRORS } = require('../helpers/utils/errors')
 
-const { ONE_DAY, bigExp, bn } = require('@aragon/contract-helpers-test')
-const { assertAmountOfEvents, assertEvent, assertBn, assertRevert } = require('@aragon/contract-helpers-test/src/asserts')
+const { ONE_DAY, bigExp, bn } = require('@1hive/contract-helpers-test')
+const { assertAmountOfEvents, assertEvent, assertBn, assertRevert } = require('@1hive/contract-helpers-test/src/asserts')
 
 contract('Agreement', ([_, owner, someone]) => {
   let disputable

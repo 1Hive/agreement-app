@@ -1,7 +1,7 @@
 const AgreementWrapper = require('./agreement')
 const { AGREEMENT_EVENTS, DISPUTABLE_EVENTS } = require('../utils/events')
 
-const { MAX_UINT192, bn, getEventArgument } = require('@aragon/contract-helpers-test')
+const { MAX_UINT192, bn, getEventArgument } = require('@1hive/contract-helpers-test')
 
 class DisputableWrapper extends AgreementWrapper {
   constructor(artifacts, web3, agreement, arbitrator, stakingFactory, clock, disputable, collateralRequirement = {}) {
