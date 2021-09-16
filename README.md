@@ -4,13 +4,13 @@ Aragon Agreements allow organization actions to be governed by a subjective set 
 
 Agreements are the bridge between an Aragon organization and Aragon Court. Organizations with an Agreement can become optimistic: most actions should be easily executed and challenged exceptionally, instead of forcing each user to go through a tedious approval process every time they want to perform an action.
 
-#### 🛠️ Project stage: development
+#### 🛠️ Project stage: complete
 
-The Agreement app is still in development phase and aspects of the mechanism are still being designed and implemented.
+The Agreement app's functionality is not expected to change in the near future.
 
-#### ⚠️ Security review status: pre-audit
+#### ⚠️ Security review status: audited
 
-The code in this sub-repo is under heavy development and hasn't undergone a professional security review yet, therefore we cannot recommend using any of the code at the moment.
+The code in this repo has undergone a professional security review.
 
 #### Note on calling permissioned functions from Disputable Voting
 Disputable Voting blacklists the Agreement contract from being called in order to prevent votes from closing actions on the Agreements app that is shouldn't.
