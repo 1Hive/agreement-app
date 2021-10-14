@@ -3,11 +3,9 @@ const { AGREEMENT_ERRORS } = require('../helpers/utils/errors')
 const { AGREEMENT_EVENTS } = require('../helpers/utils/events')
 
 const { ANY_ENTITY } = require('@1hive/contract-helpers-test/src/aragon-os')
-const { bn, injectWeb3, injectArtifacts } = require('@1hive/contract-helpers-test')
+const { bn } = require('@1hive/contract-helpers-test')
 const { assertBn, assertRevert, assertAmountOfEvents, assertEvent } = require('@1hive/contract-helpers-test/src/asserts')
 
-injectWeb3(web3)
-injectArtifacts(artifacts)
 
 contract('Agreement', ([_, signer]) => {
   let agreement

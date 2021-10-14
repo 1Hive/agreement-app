@@ -6,8 +6,6 @@ const ArbitratorMock = artifacts.require('ArbitratorMock')
 const { injectWeb3, injectArtifacts } = require('@1hive/contract-helpers-test')
 const { assertBn, assertRevert, assertEvent, assertAmountOfEvents } = require('@1hive/contract-helpers-test/src/asserts')
 
-injectWeb3(web3)
-injectArtifacts(artifacts)
 
 contract('Agreement', ([_, someone, submitter, challenger]) => {
   let disputable, actionId
