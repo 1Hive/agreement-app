@@ -25,3 +25,8 @@ package-lock.json
 # Misc
 .DS_Store
 .cache
+.env
+
+public/artifact.json
+public/manifest.json
+public/code.sol

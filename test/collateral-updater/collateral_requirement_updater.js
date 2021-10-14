@@ -1,6 +1,6 @@
 const deployer = require('../helpers/utils/deployer')(web3, artifacts)
-const { bn, bigExp, ONE_DAY } = require('@aragon/contract-helpers-test')
-const { assertBn, assertRevert } = require('@aragon/contract-helpers-test/src/asserts')
+const { bn, bigExp, ONE_DAY } = require('@1hive/contract-helpers-test')
+const { assertBn, assertRevert } = require('@1hive/contract-helpers-test/src/asserts')
 
 const CollateralRequirementUpdater = artifacts.require('CollateralRequirementUpdater')
 const PriceOracleMock = artifacts.require('PriceOracleMock')

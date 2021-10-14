@@ -2,11 +2,9 @@ const deployer = require('../helpers/utils/deployer')(web3, artifacts)
 const { AGREEMENT_EVENTS } = require('../helpers/utils/events')
 const { AGREEMENT_ERRORS, ARAGON_OS_ERRORS } = require('../helpers/utils/errors')
 
-const { ZERO_ADDRESS, bn, injectWeb3, injectArtifacts } = require('@1hive/contract-helpers-test')
+const { ZERO_ADDRESS, bn } = require('@1hive/contract-helpers-test')
 const { assertBn, assertRevert, assertEvent, assertAmountOfEvents } = require('@1hive/contract-helpers-test/src/asserts')
 
-injectWeb3(web3)
-injectArtifacts(artifacts)
 
 contract('Agreement', ([_, someone, owner]) => {
   let disputable

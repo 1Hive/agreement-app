@@ -6,8 +6,6 @@ const { AGREEMENT_EVENTS } = require('../helpers/utils/events')
 const { injectWeb3, injectArtifacts } = require('@1hive/contract-helpers-test')
 const { assertBn, assertRevert, assertEvent, assertAmountOfEvents } = require('@1hive/contract-helpers-test/src/asserts')
 
-injectWeb3(web3)
-injectArtifacts(artifacts)
 
 contract('Agreement', ([_, submitter]) => {
   let disputable, actionId, disputableActionId
