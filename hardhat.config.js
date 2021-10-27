@@ -93,7 +93,7 @@ module.exports = {
     polygon: {
       url: node_url("polygon"),
       accounts: accounts("polygon"),
-      ensRegistry: "0x4E065c622d584Fbe5D9078C3081840155FA69581",
+      ensRegistry: "0x7EdE100965B1E870d726cD480dD41F2af1Ca0130",
     },
     mumbai: {
       url: node_url("mumbai"),
