@@ -1,4 +1,4 @@
-# Agreement
+# Agreement  <a href="https://1hive.org/"><img align="right" src=".github/assets/1hive.svg" height="80px" /></a>
 
 Aragon Agreements allow organization actions to be governed by a subjective set of rules, that cannot be encoded into smart contracts.
 
