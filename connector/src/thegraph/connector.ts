@@ -1,23 +1,23 @@
-import { ErrorException } from "@1hive/connect-core";
-import { GraphQLWrapper, QueryResult } from "@1hive/connect-thegraph";
+import { ErrorException } from '@1hive/connect-core'
+import { GraphQLWrapper, QueryResult } from '@1hive/connect-thegraph'
 
-import * as queries from "./queries";
-import Signer from "../models/Signer";
-import Signature from "../models/Signature";
-import Action from "../models/Action";
-import Staking from "../models/Staking";
-import StakingMovement from "../models/StakingMovement";
-import Version from "../models/Version";
-import DisputableApp from "../models/DisputableApp";
-import CollateralRequirement from "../models/CollateralRequirement";
-import ERC20 from "../models/ERC20";
+import * as queries from './queries'
+import Signer from '../models/Signer'
+import Signature from '../models/Signature'
+import Action from '../models/Action'
+import Staking from '../models/Staking'
+import StakingMovement from '../models/StakingMovement'
+import Version from '../models/Version'
+import DisputableApp from '../models/DisputableApp'
+import CollateralRequirement from '../models/CollateralRequirement'
+import ERC20 from '../models/ERC20'
 import {
   Address,
   AgreementData,
   IAgreementConnector,
   SubscriptionCallback,
   SubscriptionHandler,
-} from "../types";
+} from '../types'
 import {
   parseAgreement,
   parseSigner,
@@ -31,19 +31,19 @@ import {
   parseStaking,
   parseStakingMovements,
   parseERC20,
-} from "./parsers";
+} from './parsers'
 
 export function subgraphUrlFromChainId(chainId: number) {
   if (chainId === 1) {
-    return "https://api.thegraph.com/subgraphs/name/aragon/aragon-agreement-mainnet";
+    return 'https://api.thegraph.com/subgraphs/name/aragon/aragon-agreement-mainnet'
   }
   if (chainId === 4) {
-    return "https://api.thegraph.com/subgraphs/name/1hive/agreement-rinkeby";
+    return 'https://api.thegraph.com/subgraphs/name/1hive/agreement-rinkeby'
   }
   if (chainId === 100) {
-    return "https://api.thegraph.com/subgraphs/name/1hive/agreement-xdai";
+    return 'https://api.thegraph.com/subgraphs/name/1hive/agreement-xdai'
   }
-  return null;
+  return null
 }
 
 type AgreementConnectorTheGraphConfig = {
@@ -51,13 +51,13 @@ type AgreementConnectorTheGraphConfig = {
   pollInterval?: number
   subgraphUrl?: string
   verbose?: boolean
-};
+}
 
 export default class AgreementConnectorTheGraph implements IAgreementConnector {
-  #gql: GraphQLWrapper;
+  #gql: GraphQLWrapper
 
   constructor(gql: GraphQLWrapper) {
-    this.#gql = gql;
+    this.#gql = gql
   }
 
   static async create(
@@ -65,34 +65,34 @@ export default class AgreementConnectorTheGraph implements IAgreementConnector {
   ): Promise<AgreementConnectorTheGraph> {
     if (!config.subgraphUrl) {
       throw new ErrorException(
-        "AgreementConnectorTheGraph requires subgraphUrl to be passed."
-      );
+        'AgreementConnectorTheGraph requires subgraphUrl to be passed.'
+      )
     }
 
     if (!config.appAddress) {
       throw new ErrorException(
-        "AgreementConnectorTheGraph requires appAddress to be passed."
-      );
+        'AgreementConnectorTheGraph requires appAddress to be passed.'
+      )
     }
 
     const gql = new GraphQLWrapper(config.subgraphUrl, {
       pollInterval: config.pollInterval,
       verbose: config.verbose,
-    });
+    })
 
-    return new AgreementConnectorTheGraph(gql);
+    return new AgreementConnectorTheGraph(gql)
   }
 
   async disconnect() {
-    this.#gql.close();
+    this.#gql.close()
   }
 
   async agreement(agreement: string): Promise<AgreementData> {
     return this.#gql.performQueryWithParser<AgreementData>(
-      queries.GET_AGREEMENT("query"),
+      queries.GET_AGREEMENT('query'),
       { agreement },
       (result: QueryResult) => parseAgreement(result)
-    );
+    )
   }
 
   onAgreement(
@@ -100,19 +100,19 @@ export default class AgreementConnectorTheGraph implements IAgreementConnector {
     callback: SubscriptionCallback<AgreementData>
   ): SubscriptionHandler {
     return this.#gql.subscribeToQueryWithParser<AgreementData>(
-      queries.GET_AGREEMENT("subscription"),
+      queries.GET_AGREEMENT('subscription'),
       { agreement },
       callback,
       (result: QueryResult) => parseAgreement(result)
-    );
+    )
   }
 
   async currentVersion(agreement: string): Promise<Version> {
     return this.#gql.performQueryWithParser<Version>(
-      queries.GET_CURRENT_VERSION("query"),
+      queries.GET_CURRENT_VERSION('query'),
       { agreement },
       (result: QueryResult) => parseCurrentVersion(result, this)
-    );
+    )
   }
 
   onCurrentVersion(
@@ -120,19 +120,19 @@ export default class AgreementConnectorTheGraph implements IAgreementConnector {
     callback: SubscriptionCallback<Version>
   ): SubscriptionHandler {
     return this.#gql.subscribeToQueryWithParser<Version>(
-      queries.GET_CURRENT_VERSION("subscription"),
+      queries.GET_CURRENT_VERSION('subscription'),
       { agreement },
       callback,
       (result: QueryResult) => parseCurrentVersion(result, this)
-    );
+    )
   }
 
   async version(versionId: string): Promise<Version> {
     return this.#gql.performQueryWithParser<Version>(
-      queries.GET_VERSION("query"),
+      queries.GET_VERSION('query'),
       { versionId },
       (result: QueryResult) => parseVersion(result, this)
-    );
+    )
   }
 
   onVersion(
@@ -140,11 +140,11 @@ export default class AgreementConnectorTheGraph implements IAgreementConnector {
     callback: SubscriptionCallback<Version>
   ): SubscriptionHandler {
     return this.#gql.subscribeToQueryWithParser<Version>(
-      queries.GET_VERSION("subscription"),
+      queries.GET_VERSION('subscription'),
       { versionId },
       callback,
       (result: QueryResult) => parseVersion(result, this)
-    );
+    )
   }
 
   async versions(
@@ -153,10 +153,10 @@ export default class AgreementConnectorTheGraph implements IAgreementConnector {
     skip: number
   ): Promise<Version[]> {
     return this.#gql.performQueryWithParser<Version[]>(
-      queries.ALL_VERSIONS("query"),
+      queries.ALL_VERSIONS('query'),
       { agreement, first, skip },
       (result: QueryResult) => parseVersions(result, this)
-    );
+    )
   }
 
   onVersions(
@@ -166,11 +166,11 @@ export default class AgreementConnectorTheGraph implements IAgreementConnector {
     callback: SubscriptionCallback<Version[]>
   ): SubscriptionHandler {
     return this.#gql.subscribeToQueryWithParser<Version[]>(
-      queries.ALL_VERSIONS("subscription"),
+      queries.ALL_VERSIONS('subscription'),
       { agreement, first, skip },
       callback,
       (result: QueryResult) => parseVersions(result, this)
-    );
+    )
   }
 
   async disputableApps(
@@ -179,10 +179,10 @@ export default class AgreementConnectorTheGraph implements IAgreementConnector {
     skip: number
   ): Promise<DisputableApp[]> {
     return this.#gql.performQueryWithParser<DisputableApp[]>(
-      queries.ALL_DISPUTABLE_APPS("query"),
+      queries.ALL_DISPUTABLE_APPS('query'),
       { agreement, first, skip },
       (result: QueryResult) => parseDisputableApps(result, this)
-    );
+    )
   }
 
   onDisputableApps(
@@ -192,19 +192,19 @@ export default class AgreementConnectorTheGraph implements IAgreementConnector {
     callback: SubscriptionCallback<DisputableApp[]>
   ): SubscriptionHandler {
     return this.#gql.subscribeToQueryWithParser<DisputableApp[]>(
-      queries.ALL_DISPUTABLE_APPS("subscription"),
+      queries.ALL_DISPUTABLE_APPS('subscription'),
       { agreement, first, skip },
       callback,
       (result: QueryResult) => parseDisputableApps(result, this)
-    );
+    )
   }
 
   async signer(signerId: string): Promise<Signer | null> {
     return this.#gql.performQueryWithParser<Signer | null>(
-      queries.GET_SIGNER("query"),
+      queries.GET_SIGNER('query'),
       { signerId },
       (result: QueryResult) => parseSigner(result, this)
-    );
+    )
   }
 
   onSigner(
@@ -212,11 +212,11 @@ export default class AgreementConnectorTheGraph implements IAgreementConnector {
     callback: SubscriptionCallback<Signer | null>
   ): SubscriptionHandler {
     return this.#gql.subscribeToQueryWithParser<Signer | null>(
-      queries.GET_SIGNER("query"),
+      queries.GET_SIGNER('query'),
       { signerId },
       callback,
       (result: QueryResult) => parseSigner(result, this)
-    );
+    )
   }
 
   async signatures(
@@ -225,10 +225,10 @@ export default class AgreementConnectorTheGraph implements IAgreementConnector {
     skip: number
   ): Promise<Signature[]> {
     return this.#gql.performQueryWithParser<Signature[]>(
-      queries.GET_SIGNATURES("query"),
+      queries.GET_SIGNATURES('query'),
       { signerId, first, skip },
       (result: QueryResult) => parseSignatures(result, this)
-    );
+    )
   }
 
   onSignatures(
@@ -238,21 +238,21 @@ export default class AgreementConnectorTheGraph implements IAgreementConnector {
     callback: SubscriptionCallback<Signature[]>
   ): SubscriptionHandler {
     return this.#gql.subscribeToQueryWithParser<Signature[]>(
-      queries.GET_SIGNATURES("query"),
+      queries.GET_SIGNATURES('query'),
       { signerId, first, skip },
       callback,
       (result: QueryResult) => parseSignatures(result, this)
-    );
+    )
   }
 
   async collateralRequirement(
     collateralRequirementId: string
   ): Promise<CollateralRequirement> {
     return this.#gql.performQueryWithParser<CollateralRequirement>(
-      queries.GET_COLLATERAL_REQUIREMENT("query"),
+      queries.GET_COLLATERAL_REQUIREMENT('query'),
       { collateralRequirementId },
       (result: QueryResult) => parseCollateralRequirement(result, this)
-    );
+    )
   }
 
   onCollateralRequirement(
@@ -260,19 +260,19 @@ export default class AgreementConnectorTheGraph implements IAgreementConnector {
     callback: SubscriptionCallback<CollateralRequirement>
   ): SubscriptionHandler {
     return this.#gql.subscribeToQueryWithParser<CollateralRequirement>(
-      queries.GET_COLLATERAL_REQUIREMENT("subscription"),
+      queries.GET_COLLATERAL_REQUIREMENT('subscription'),
       { collateralRequirementId },
       callback,
       (result: QueryResult) => parseCollateralRequirement(result, this)
-    );
+    )
   }
 
   async staking(stakingId: string): Promise<Staking | null> {
     return this.#gql.performQueryWithParser<Staking>(
-      queries.GET_STAKING("query"),
+      queries.GET_STAKING('query'),
       { stakingId },
       (result: QueryResult) => parseStaking(result, this)
-    );
+    )
   }
 
   onStaking(
@@ -280,11 +280,11 @@ export default class AgreementConnectorTheGraph implements IAgreementConnector {
     callback: SubscriptionCallback<Staking | null>
   ): SubscriptionHandler {
     return this.#gql.subscribeToQueryWithParser<Staking | null>(
-      queries.GET_STAKING("query"),
+      queries.GET_STAKING('query'),
       { stakingId },
       callback,
       (result: QueryResult) => parseStaking(result, this)
-    );
+    )
   }
 
   async stakingMovements(
@@ -294,10 +294,10 @@ export default class AgreementConnectorTheGraph implements IAgreementConnector {
     skip: number
   ): Promise<StakingMovement[]> {
     return this.#gql.performQueryWithParser<StakingMovement[]>(
-      queries.GET_STAKING_MOVEMENTS("query"),
+      queries.GET_STAKING_MOVEMENTS('query'),
       { stakingId, agreementId, first, skip },
       (result: QueryResult) => parseStakingMovements(result, this)
-    );
+    )
   }
 
   onStakingMovements(
@@ -308,19 +308,19 @@ export default class AgreementConnectorTheGraph implements IAgreementConnector {
     callback: SubscriptionCallback<StakingMovement[]>
   ): SubscriptionHandler {
     return this.#gql.subscribeToQueryWithParser<StakingMovement[]>(
-      queries.GET_STAKING_MOVEMENTS("query"),
+      queries.GET_STAKING_MOVEMENTS('query'),
       { stakingId, agreementId, first, skip },
       callback,
       (result: QueryResult) => parseStakingMovements(result, this)
-    );
+    )
   }
 
   async action(actionId: string): Promise<Action | null> {
     return this.#gql.performQueryWithParser<Action | null>(
-      queries.GET_ACTION("query"),
+      queries.GET_ACTION('query'),
       { actionId },
       (result: QueryResult) => parseAction(result, this)
-    );
+    )
   }
 
   onAction(
@@ -328,19 +328,19 @@ export default class AgreementConnectorTheGraph implements IAgreementConnector {
     callback: SubscriptionCallback<Action | null>
   ): SubscriptionHandler {
     return this.#gql.subscribeToQueryWithParser<Action | null>(
-      queries.GET_ACTION("query"),
+      queries.GET_ACTION('query'),
       { actionId },
       callback,
       (result: QueryResult) => parseAction(result, this)
-    );
+    )
   }
 
   async ERC20(tokenAddress: Address): Promise<ERC20> {
     return this.#gql.performQueryWithParser<ERC20>(
-      queries.GET_ERC20("query"),
+      queries.GET_ERC20('query'),
       { tokenAddress },
       (result: QueryResult) => parseERC20(result)
-    );
+    )
   }
 
   onERC20(
@@ -348,10 +348,10 @@ export default class AgreementConnectorTheGraph implements IAgreementConnector {
     callback: SubscriptionCallback<ERC20>
   ): SubscriptionHandler {
     return this.#gql.subscribeToQueryWithParser<ERC20>(
-      queries.GET_ERC20("subscription"),
+      queries.GET_ERC20('subscription'),
       { tokenAddress },
       callback,
       (result: QueryResult) => parseERC20(result)
-    );
+    )
   }
 }

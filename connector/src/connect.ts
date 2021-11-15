@@ -1,31 +1,29 @@
-import { createAppConnector } from "@1hive/connect-core";
-import Agreement from "./models/Agreement";
+import { createAppConnector } from '@1hive/connect-core'
+import Agreement from './models/Agreement'
 import AgreementConnectorTheGraph, {
   subgraphUrlFromChainId,
-} from "./thegraph/connector";
+} from './thegraph/connector'
 
 type Config = {
   pollInterval?: number
   subgraphUrl?: string
-};
+}
 
 export default createAppConnector<Agreement, Config>(
   async ({ app, config, connector, network, orgConnector, verbose }) => {
-    if (connector !== "thegraph") {
+    if (connector !== 'thegraph') {
       console.warn(
         `Connector unsupported: ${connector}. Using "thegraph" instead.`
-      );
+      )
     }
 
     const subgraphUrl =
-      config.subgraphUrl ??
-      subgraphUrlFromChainId(network.chainId) ??
-      undefined;
+      config.subgraphUrl ?? subgraphUrlFromChainId(network.chainId) ?? undefined
 
-    let pollInterval;
-    if (orgConnector.name === "thegraph") {
+    let pollInterval
+    if (orgConnector.name === 'thegraph') {
       pollInterval =
-        config?.pollInterval ?? orgConnector.config?.pollInterval ?? undefined;
+        config?.pollInterval ?? orgConnector.config?.pollInterval ?? undefined
     }
 
     const connectorTheGraph = await AgreementConnectorTheGraph.create({
@@ -33,8 +31,8 @@ export default createAppConnector<Agreement, Config>(
       pollInterval,
       subgraphUrl,
       verbose,
-    });
+    })
 
-    return new Agreement(connectorTheGraph, app);
+    return new Agreement(connectorTheGraph, app)
   }
-);
+)
