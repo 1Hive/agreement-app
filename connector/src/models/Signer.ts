@@ -1,6 +1,5 @@
-import { SubscriptionCallback, SubscriptionResult } from '@aragon/connect-types'
-import { subscription } from '@aragon/connect-core'
-import { SignerData, IAgreementConnector } from '../types'
+import { subscription } from '@1hive/connect-core'
+import { SignerData, IAgreementConnector, SubscriptionCallback, SubscriptionResult } from '../types'
 import Signature from '../models/Signature'
 
 export default class Signer {

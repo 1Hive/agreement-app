@@ -1,8 +1,3 @@
-import {
-  SubscriptionCallback,
-  SubscriptionHandler,
-} from '@aragon/connect-types'
-
 import Signer from './models/Signer'
 import Signature from './models/Signature'
 import Version from './models/Version'
@@ -12,6 +7,15 @@ import Action from './models/Action'
 import Staking from './models/Staking'
 import StakingMovement from './models/StakingMovement'
 import ERC20 from './models/ERC20'
+
+export type Address = string
+
+export type SubscriptionHandler = { unsubscribe: () => void }
+export type SubscriptionCallback<T> = (error: Error | null, data?: T) => void
+export type SubscriptionStart<T> = (
+  callback: SubscriptionCallback<T>
+) => SubscriptionHandler
+export type SubscriptionResult<T> = SubscriptionHandler | SubscriptionStart<T>
 
 export interface AgreementData {
   id: string

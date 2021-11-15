@@ -1,6 +1,5 @@
 import { Contract, utils } from 'ethers'
-import { SubscriptionCallback, SubscriptionResult } from '@aragon/connect-types'
-import { subscription, App, ForwardingPath, arbitratorAbi } from '@aragon/connect-core'
+import { subscription, App, ForwardingPath, arbitratorAbi } from '@1hive/connect-core'
 
 import { bn } from '../helpers'
 import Action from './Action'
@@ -9,7 +8,7 @@ import Version from './Version'
 import DisputableApp from './DisputableApp'
 import Staking from './Staking'
 import StakingMovement from './StakingMovement'
-import { IAgreementConnector } from '../types'
+import { IAgreementConnector, SubscriptionCallback, SubscriptionResult } from '../types'
 
 export default class Agreement {
   #app: App
