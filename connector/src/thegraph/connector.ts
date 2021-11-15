@@ -47,10 +47,10 @@ export function subgraphUrlFromChainId(chainId: number) {
 }
 
 type AgreementConnectorTheGraphConfig = {
-  appAddress?: Address;
-  pollInterval?: number;
-  subgraphUrl?: string;
-  verbose?: boolean;
+  appAddress?: Address
+  pollInterval?: number
+  subgraphUrl?: string
+  verbose?: boolean
 };
 
 export default class AgreementConnectorTheGraph implements IAgreementConnector {

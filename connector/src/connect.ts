@@ -5,8 +5,8 @@ import AgreementConnectorTheGraph, {
 } from "./thegraph/connector";
 
 type Config = {
-  pollInterval?: number;
-  subgraphUrl?: string;
+  pollInterval?: number
+  subgraphUrl?: string
 };
 
 export default createAppConnector<Agreement, Config>(
