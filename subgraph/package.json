@@ -4,16 +4,14 @@
   "scripts": {
     "codegen": "rm -rf generated; graph codegen",
     "build": "rm -rf build; graph build",
-    "manifest-mainnet": "scripts/build-manifest.sh mainnet",
-    "manifest-mainnet-staging": "env STAGING=true scripts/build-manifest.sh mainnet",
     "manifest-rinkeby": "scripts/build-manifest.sh rinkeby",
     "manifest-rinkeby-staging": "env STAGING=true scripts/build-manifest.sh rinkeby",
     "manifest-xdai": "scripts/build-manifest.sh xdai",
-    "deploy-mainnet": "scripts/deploy.sh aragon agreement mainnet",
-    "deploy-mainnet-staging": "env STAGING=true scripts/deploy.sh aragon agreement mainnet",
+    "manifest-polygon": "scripts/build-manifest.sh polygon",
     "deploy-rinkeby": "scripts/deploy.sh rinkeby",
     "deploy-rinkeby-staging": "env STAGING=true scripts/deploy.sh aragon agreement rinkeby",
-    "deploy-xdai": "scripts/deploy.sh xdai"
+    "deploy-xdai": "scripts/deploy.sh xdai",
+    "deploy-polygon": "scripts/deploy.sh polygon"
   },
   "devDependencies": {
     "@graphprotocol/graph-cli": "^0.19.0",

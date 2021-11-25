@@ -15,13 +15,7 @@
         "startBlock": "10076184"
       }
     ],
-    "OrganizationTemplates": [
-      {
-        "name": "gardens-template@1.0.0",
-        "address": "0xd90deE41a68291d15AD4B1939ab5d4e75Db4Fc3d",
-        "startBlock": 16466203
-      }
-    ],
+    "OrganizationTemplates": [],
     "TokenFactories": [],
     "Tokens": []
   }

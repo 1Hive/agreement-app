@@ -10,10 +10,10 @@
     web3-eth-abi "1.2.5"
     web3-utils "1.2.5"
 
-"@1hive/hardhat-aragon@^0.0.3":
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/@1hive/hardhat-aragon/-/hardhat-aragon-0.0.3.tgz#7d29919e201da603af5c19767f248fb9bf7ba5bd"
-  integrity sha512-41g3fDBi3W2IBKihS5Birzx6myp5tnjrzqy8rZqrAu0oLbdmzYyk8PzzyC3LDMEpA8dZQicpzR/vE7Qkh1GR3Q==
+"@1hive/hardhat-aragon@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@1hive/hardhat-aragon/-/hardhat-aragon-0.1.0.tgz#db0416e0421d5b522957da3445a1878a62e6f8a1"
+  integrity sha512-I6I0sbTpdyIrBYpPPOLUYD3lYHBuEv5tKhH9X58qm5IzAvJSv7Cy/haanYtWA7/No6LHNWEh59msPY+L1gTmsw==
   dependencies:
     "@solidity-parser/parser" "^0.12.2"
     chalk "^4.1.1"
