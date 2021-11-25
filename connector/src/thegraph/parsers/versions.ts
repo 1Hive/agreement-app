@@ -1,4 +1,4 @@
-import { QueryResult } from '@aragon/connect-thegraph'
+import { QueryResult } from '@1hive/connect-thegraph'
 
 import { VersionData } from '../../types'
 import Version from '../../models/Version'

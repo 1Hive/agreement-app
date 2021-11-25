@@ -1,11 +1,10 @@
-import { subscription } from '@aragon/connect-core'
-import { SubscriptionCallback, SubscriptionResult } from '@aragon/connect-types'
+import { subscription } from '@1hive/connect-core'
 
 import ERC20 from './ERC20'
 import Action from '../models/Action'
 import Staking from '../models/Staking'
 import { formatBn } from '../helpers'
-import { IAgreementConnector, StakingMovementData } from '../types'
+import { IAgreementConnector, StakingMovementData, SubscriptionCallback, SubscriptionResult } from '../types'
 
 
 export default class StakingMovement {

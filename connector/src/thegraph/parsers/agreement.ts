@@ -1,5 +1,5 @@
-import { ErrorUnexpectedResult } from '@aragon/connect-core'
-import { QueryResult } from '@aragon/connect-thegraph'
+import { ErrorUnexpectedResult } from '@1hive/connect-core'
+import { QueryResult } from '@1hive/connect-thegraph'
 import { AgreementData } from '../../types'
 
 export function parseAgreement(result: QueryResult): AgreementData {

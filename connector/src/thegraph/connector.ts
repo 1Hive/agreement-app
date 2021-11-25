@@ -1,10 +1,5 @@
-import {
-  Address,
-  SubscriptionCallback,
-  SubscriptionHandler,
-} from '@aragon/connect-types'
-import { ErrorException } from '@aragon/connect-core'
-import { GraphQLWrapper, QueryResult } from '@aragon/connect-thegraph'
+import { ErrorException } from '@1hive/connect-core'
+import { GraphQLWrapper, QueryResult } from '@1hive/connect-thegraph'
 
 import * as queries from './queries'
 import Signer from '../models/Signer'
@@ -16,7 +11,13 @@ import Version from '../models/Version'
 import DisputableApp from '../models/DisputableApp'
 import CollateralRequirement from '../models/CollateralRequirement'
 import ERC20 from '../models/ERC20'
-import { AgreementData, IAgreementConnector } from '../types'
+import {
+  Address,
+  AgreementData,
+  IAgreementConnector,
+  SubscriptionCallback,
+  SubscriptionHandler,
+} from '../types'
 import {
   parseAgreement,
   parseSigner,
@@ -37,10 +38,13 @@ export function subgraphUrlFromChainId(chainId: number) {
     return 'https://api.thegraph.com/subgraphs/name/aragon/aragon-agreement-mainnet'
   }
   if (chainId === 4) {
-    return 'https://api.thegraph.com/subgraphs/name/aragon/aragon-agreement-rinkeby'
+    return 'https://api.thegraph.com/subgraphs/name/1hive/agreement-rinkeby'
   }
   if (chainId === 100) {
-    return 'https://api.thegraph.com/subgraphs/name/aragon/aragon-agreement-xdai'
+    return 'https://api.thegraph.com/subgraphs/name/1hive/agreement-xdai'
+  }
+  if (chainId === 137) {
+    return 'https://api.thegraph.com/subgraphs/name/1hive/agreement-polygon'
   }
   return null
 }
@@ -266,9 +270,7 @@ export default class AgreementConnectorTheGraph implements IAgreementConnector {
     )
   }
 
-  async staking(
-    stakingId: string
-  ): Promise<Staking | null> {
+  async staking(stakingId: string): Promise<Staking | null> {
     return this.#gql.performQueryWithParser<Staking>(
       queries.GET_STAKING('query'),
       { stakingId },

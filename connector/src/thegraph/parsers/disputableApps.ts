@@ -1,4 +1,4 @@
-import { QueryResult } from '@aragon/connect-thegraph'
+import { QueryResult } from '@1hive/connect-thegraph'
 
 import { DisputableAppData } from '../../types'
 import DisputableApp from '../../models/DisputableApp'

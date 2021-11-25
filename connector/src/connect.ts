@@ -1,4 +1,4 @@
-import { createAppConnector } from '@aragon/connect-core'
+import { createAppConnector } from '@1hive/connect-core'
 import Agreement from './models/Agreement'
 import AgreementConnectorTheGraph, {
   subgraphUrlFromChainId,
@@ -27,6 +27,7 @@ export default createAppConnector<Agreement, Config>(
     }
 
     const connectorTheGraph = await AgreementConnectorTheGraph.create({
+      appAddress: app.address,
       pollInterval,
       subgraphUrl,
       verbose,

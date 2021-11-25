@@ -1,6 +1,5 @@
-import { SubscriptionCallback, SubscriptionResult } from '@aragon/connect-types'
-import { subscription } from '@aragon/connect-core'
-import { DisputableAppData, IAgreementConnector } from '../types'
+import { subscription } from '@1hive/connect-core'
+import { DisputableAppData, IAgreementConnector, SubscriptionCallback, SubscriptionResult } from '../types'
 import CollateralRequirement from './CollateralRequirement'
 
 export default class DisputableApp {

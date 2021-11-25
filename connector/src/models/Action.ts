@@ -1,9 +1,8 @@
-import { subscription } from '@aragon/connect-core'
-import { SubscriptionCallback, SubscriptionResult } from '@aragon/connect-types'
+import { subscription } from '@1hive/connect-core'
 
 import Version from './Version'
 import CollateralRequirement from './CollateralRequirement'
-import { IAgreementConnector, ActionData } from '../types'
+import { IAgreementConnector, ActionData, SubscriptionCallback, SubscriptionResult } from '../types'
 
 export default class Action {
   #connector: IAgreementConnector

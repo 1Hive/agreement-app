@@ -1,6 +1,5 @@
-import { SubscriptionCallback, SubscriptionResult } from '@aragon/connect-types'
-import { subscription } from '@aragon/connect-core'
-import { CollateralRequirementData, IAgreementConnector } from '../types'
+import { subscription } from '@1hive/connect-core'
+import { CollateralRequirementData, IAgreementConnector, SubscriptionCallback, SubscriptionResult } from '../types'
 import ERC20 from './ERC20'
 import { formatBn } from '../helpers'
 
