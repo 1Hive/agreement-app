@@ -15,23 +15,7 @@
         "startBlock": "10076184"
       }
     ],
-    "OrganizationTemplates": [
-      {
-        "address": "0x5507A6365C47d5b201Af3c1CB18C7fD4a889321b",
-        "name": "gardens-template@1.0.0",
-        "startBlock": 17550461
-      },
-      {
-        "address": "0x9B770712603d66Faa8F048EEf4C0Afd2FA7F0844",
-        "name": "GardensTemplateWithModVoting",
-        "startBlock": 19255064
-      },
-      {
-        "address": "0x82a127b5Be3E04cd06AA034c1616b4d098616E9D",
-        "name": "GardensTemplateStaging",
-        "startBlock": 19147128
-      }
-    ],
+    "OrganizationTemplates": [],
     "TokenFactories": [],
     "Tokens": []
   }

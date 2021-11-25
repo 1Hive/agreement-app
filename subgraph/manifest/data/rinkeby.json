@@ -9,38 +9,7 @@
         "startBlock": "5026118"
       }
     ],
-    "OrganizationTemplates": [
-      {
-        "address": "0xE1B043996132c2285Ee298a878F2C20DCdB9E3AA",
-        "name": "gardens-template@1.0.0",
-        "startBlock": 8650058
-      },
-      {
-        "address": "0x5580958AA6E3b79650250A07134DF005965e1b67",
-        "name": "GardensTemplateWithPermit",
-        "startBlock": 8724398
-      },
-      {
-        "address": "0x2427F0f1B842665d9FB9f0d8Ca347E044Ef5F15a",
-        "name": "GardensTemplateWithPermit2",
-        "startBlock": 9102279
-      },
-      {
-        "address": "0xa8e6c20e8ad85836c8ee7b6c8decae75967b580e",
-        "name": "GardensTemplateWithGnosisSafe",
-        "startBlock": 9463579
-      },
-      {
-        "address": "0xA28c03923385e31E506e749e64Ce4CfC14d93459",
-        "name": "GardensTemplateWithModVoting",
-        "startBlock": 9589595
-      },
-      {
-        "address": "0xF8A030177865356E2Be8fb5F95a19962E6b57E3e",
-        "name": "GardensTemplateWithWrappedRole",
-        "startBlock": 9668429
-      }
-    ],
+    "OrganizationTemplates": [],
     "LegacyOrganizationTemplates": [],
     "TokenFactories": [],
     "Tokens": []
