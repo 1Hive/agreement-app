@@ -1,0 +1,22 @@
+{
+  "network": "matic",
+  "dataSources": {
+    "Organizations": [],
+    "OrganizationFactories": [
+      {
+        "name": "DAOFactory",
+        "address": "0xEe261Cf86cFf35d8657a4B5D4d1546B4d72c5314",
+        "startBlock": "20426484"
+      }
+    ],
+    "OrganizationTemplates": [
+      {
+        "name": "gardens-template@1.0.0",
+        "address": "0x785580f946e322E4Ed6900a2C4A08413f65FfbBF",
+        "startBlock": 21709747 
+      }
+    ],
+    "TokenFactories": [],
+    "Tokens": []
+  }
+}
