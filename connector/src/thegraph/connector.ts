@@ -43,6 +43,9 @@ export function subgraphUrlFromChainId(chainId: number) {
   if (chainId === 100) {
     return 'https://api.thegraph.com/subgraphs/name/1hive/agreement-xdai'
   }
+  if (chainId === 137) {
+    return 'https://api.thegraph.com/subgraphs/name/1hive/agreement-polygon'
+  }
   return null
 }
 
