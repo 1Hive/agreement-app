@@ -272,6 +272,10 @@ function updateCollateralRequirement(agreement: Address, disputable: Address, co
   requirement.actionAmount = requirementData.value2
   requirement.challengeAmount = requirementData.value3
   requirement.save()
+  const disputableApp = loadOrCreateDisputable(agreement, disputable)
+  disputableApp.currentCollateralRequirement = requirementId
+  disputableApp.save()
+
 }
 
 function createStakingMovement(agreement: Address, actionId: BigInt, type: string, event: ethereum.Event): void {
