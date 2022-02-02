@@ -1,4 +1,4 @@
-import { ethereum, BigInt, Address } from '@graphprotocol/graph-ts'
+import { ethereum, BigInt, Address, log } from '@graphprotocol/graph-ts'
 
 import { ERC20 } from '../generated/schema'
 import { ERC20 as ERC20Contract } from '../generated/templates/Agreement/ERC20'
@@ -27,17 +27,21 @@ import {
 
 export function handleSettingChanged(event: SettingChanged): void {
   const agreementApp = AgreementContract.bind(event.address)
-  const settingData = agreementApp.getSetting(event.params.settingId)
+  const settingData = agreementApp.try_getSetting(event.params.settingId)
+
+  if(settingData.reverted){
+    return
+  }
 
   const agreement = loadOrCreateAgreement(event.address)
   const currentVersionId = buildVersionId(event.address, event.params.settingId)
   const version = new Version(currentVersionId)
   version.agreement = event.address.toHexString()
   version.versionId = event.params.settingId
-  version.arbitrator = settingData.value0
-  version.appFeesCashier = settingData.value1
-  version.title = settingData.value2
-  version.content = settingData.value3
+  version.arbitrator = settingData.value.value0
+  version.appFeesCashier = settingData.value.value1
+  version.title = settingData.value.value2
+  version.content = settingData.value.value3
   version.effectiveFrom = event.block.timestamp
   version.save()
 
@@ -60,7 +64,6 @@ export function handleDisputableAppActivated(event: DisputableAppActivated): voi
   const agreementApp = AgreementContract.bind(event.address)
   const disputableData = agreementApp.getDisputableInfo(event.params.disputable)
   const disputable = loadOrCreateDisputable(event.address, event.params.disputable)
-  disputable.activated = true
   disputable.currentCollateralRequirement = buildCollateralRequirementId(event.address, event.params.disputable, disputableData.value1)
   disputable.save()
 
@@ -74,6 +77,7 @@ export function handleDisputableAppDeactivated(event: DisputableAppDeactivated):
 }
 
 export function handleCollateralRequirementChanged(event: CollateralRequirementChanged): void {
+  log.info("messageeee", [])
   updateCollateralRequirement(event.address, event.params.disputable, event.params.collateralRequirementId)
 }
 
@@ -217,6 +221,7 @@ function loadOrCreateDisputable(agreement: Address, disputableAddress: Address):
     disputable = new Disputable(disputableId)
     disputable.agreement = agreement.toHexString()
     disputable.address = disputableAddress
+    disputable.activated = true
   }
   return disputable!
 }
@@ -261,18 +266,20 @@ function updateDisputeState(agreement: Address, challengeId: BigInt, event: ethe
 }
 
 function updateCollateralRequirement(agreement: Address, disputable: Address, collateralRequirementId: BigInt): void {
+  //test 23
   const agreementApp = AgreementContract.bind(agreement)
   const requirementId = buildCollateralRequirementId(agreement, disputable, collateralRequirementId)
 
   const requirement = new CollateralRequirement(requirementId)
   const requirementData = agreementApp.getCollateralRequirement(disputable, collateralRequirementId)
+  const disputableApp = loadOrCreateDisputable(agreement, disputable)
   requirement.disputable = buildDisputableId(agreement, disputable)
   requirement.token = buildERC20(agreement, requirementData.value0)
   requirement.challengeDuration = requirementData.value1
   requirement.actionAmount = requirementData.value2
   requirement.challengeAmount = requirementData.value3
   requirement.save()
-  const disputableApp = loadOrCreateDisputable(agreement, disputable)
+  
   disputableApp.currentCollateralRequirement = requirementId
   disputableApp.save()
 
@@ -377,9 +384,15 @@ export function buildERC20(agreement: Address, address: Address): string {
   if (token === null) {
     const tokenContract = ERC20Contract.bind(address)
     token = new ERC20(id)
-    token.name = tokenContract.name()
-    token.symbol = tokenContract.symbol()
-    token.decimals = tokenContract.decimals()
+    const tokenName = tokenContract.try_name()
+    const tokenSymbol = tokenContract.try_symbol()
+    const tokenDecimals = tokenContract.try_decimals()
+    if (tokenName.reverted || tokenSymbol.reverted || tokenDecimals.reverted) {
+      return null
+    }
+    token.name = tokenName.value
+    token.symbol = tokenSymbol.value
+    token.decimals = tokenDecimals.value
     token.save()
   }
 
