@@ -1,4 +1,4 @@
-import { ethereum, BigInt, Address, log } from "@graphprotocol/graph-ts";
+import { ethereum, BigInt, Address } from "@graphprotocol/graph-ts";
 
 import { ERC20 } from "../generated/schema";
 import { ERC20 as ERC20Contract } from "../generated/templates/Agreement/ERC20";
