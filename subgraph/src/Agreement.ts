@@ -1,4 +1,4 @@
-import { ethereum, BigInt, Address } from '@graphprotocol/graph-ts'
+import { ethereum, BigInt, Address, log } from '@graphprotocol/graph-ts'
 
 import { ERC20 } from '../generated/schema'
 import { ERC20 as ERC20Contract } from '../generated/templates/Agreement/ERC20'
@@ -30,6 +30,7 @@ export function handleSettingChanged(event: SettingChanged): void {
   const settingData = agreementApp.try_getSetting(event.params.settingId)
 
   if(settingData.reverted){
+    log.error('Agrement app with corrupted setings {} ', [event.address.toHexString()])
     return
   }
 
@@ -126,6 +127,7 @@ export function handleActionChallenged(event: ActionChallenged): void {
   const challengeData = agreementApp.try_getChallenge(event.params.challengeId)
 
   if(challengeData.reverted){
+    log.error('Agrement app with corrupted setings {} ', [event.address.toHexString()])
     return
   }
   challenge.action = buildActionId(event.address, event.params.actionId)
