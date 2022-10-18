@@ -1,6 +1,6 @@
 {
   "name": "@1hive/connect-agreement",
-  "version": "0.9.5",
+  "version": "0.9.6",
   "license": "LGPL-3.0-or-later",
   "description": "Access and interact with Aragon Organizations and their apps.",
   "author": "Aragon Association <legal@aragon.org>",
