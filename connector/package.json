@@ -35,8 +35,8 @@
     "lint": "eslint --ext .ts ./src"
   },
   "dependencies": {
-    "@1hive/connect-core": "^0.9.3",
-    "@1hive/connect-thegraph": "^0.9.3",
+    "@1hive/connect-core": "^0.9.13",
+    "@1hive/connect-thegraph": "^0.9.13",
     "graphql-tag": "^2.10.3"
   },
   "devDependencies": {
@@ -45,8 +45,8 @@
     "@typescript-eslint/eslint-plugin": "^2.29.0",
     "@typescript-eslint/parser": "^2.29.0",
     "eslint": "^6.8.0",
-    "prettier": "^2.0.5",
     "jest": "^26.0.1",
+    "prettier": "^2.0.5",
     "ts-jest": "^26.1.0",
     "typescript": "^3.8.3"
   }
