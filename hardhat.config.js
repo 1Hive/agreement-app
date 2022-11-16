@@ -5,6 +5,7 @@ require("@nomiclabs/hardhat-ethers");
 require("@nomiclabs/hardhat-truffle5");
 require("@nomiclabs/hardhat-web3");
 require("hardhat-deploy");
+require("hardhat-deploy-tenderly");
 require("hardhat-gas-reporter");
 require("solidity-coverage");
 
@@ -59,11 +60,11 @@ module.exports = {
       accounts: accounts(process.env.HARDHAT_FORK),
       forking: process.env.HARDHAT_FORK
         ? {
-            url: node_url(process.env.HARDHAT_FORK),
-            blockNumber: process.env.HARDHAT_FORK_NUMBER
-              ? parseInt(process.env.HARDHAT_FORK_NUMBER)
-              : undefined,
-          }
+          url: node_url(process.env.HARDHAT_FORK),
+          blockNumber: process.env.HARDHAT_FORK_NUMBER
+            ? parseInt(process.env.HARDHAT_FORK_NUMBER)
+            : undefined,
+        }
         : undefined,
     },
     localhost: {
@@ -75,10 +76,10 @@ module.exports = {
       url: node_url("mainnet"),
       accounts: accounts("mainnet"),
     },
-    rinkeby: {
-      url: node_url("rinkeby"),
-      accounts: accounts("rinkeby"),
-      ensRegistry: "0x98Df287B6C145399Aaa709692c8D308357bC085D",
+    goerli: {
+      url: node_url("goerli"),
+      accounts: accounts("goerli"),
+      ensRegistry: "0x8cF5A255ED61F403837F040B8D9f052857469273",
     },
     ropsten: {
       url: node_url("ropsten"),
@@ -127,12 +128,12 @@ module.exports = {
   },
   external: process.env.HARDHAT_FORK
     ? {
-        deployments: {
-          // process.env.HARDHAT_FORK will specify the network that the fork is made from.
-          // these lines allow it to fetch the deployments from the network being forked from both for node and deploy task
-          hardhat: ["deployments/" + process.env.HARDHAT_FORK],
-          localhost: ["deployments/" + process.env.HARDHAT_FORK],
-        },
-      }
+      deployments: {
+        // process.env.HARDHAT_FORK will specify the network that the fork is made from.
+        // these lines allow it to fetch the deployments from the network being forked from both for node and deploy task
+        hardhat: ["deployments/" + process.env.HARDHAT_FORK],
+        localhost: ["deployments/" + process.env.HARDHAT_FORK],
+      },
+    }
     : undefined,
 };
