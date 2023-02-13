@@ -1,0 +1,16 @@
+fileignoreconfig:
+- filename: contracts/collateralUpdater/CollateralRequirementUpdaterFactory.sol
+  checksum: 6caad1f2ee598ec7cdf3eeb9d357feda8c0df1cdf3ad0acd11ff8d5541fe69d3
+- filename: hardhat.config.js
+  checksum: af4ea39acb7a9829bf5798d3d2a835945045598b542805fe8ce022700949d162
+- filename: subgraph/manifest/data/goerli.json
+  checksum: afe45e8cafe0069518445dfedc21c86c53c0b4c90bd5367201c38fcb8a82bffb
+- filename: deployments/goerli/solcInputs/f7407e4e08d726f80a955bcd3a6cc2ae.json
+  checksum: 12956ed1cfc1c4c91ac185229261b8226ba9b2a5f825fb226309656c16cb6520
+- filename: deployments/goerli/CollateralRequirementUpdaterFactory.json
+  checksum: 8380ce25c55b361f0d8f130d63d915e029595f3061bfaa24fc8b2bee1699fb3e
+- filename: yarn.lock
+  checksum: 9bf468ab9dfaf3c09fa91405a619c6658c5935beb3aeb597da786d1d04752e87
+- filename: subgraph/yarn.lock
+  checksum: 888f5b0384b18744ba5b24026a6aa45a0b98201be45ad66f6ae1b0e05ba031c4
+version: ""
