@@ -4,18 +4,18 @@
   "scripts": {
     "codegen": "rm -rf generated; graph codegen",
     "build": "rm -rf build; graph build",
-    "manifest-rinkeby": "scripts/build-manifest.sh rinkeby",
-    "manifest-rinkeby-staging": "env STAGING=true scripts/build-manifest.sh rinkeby",
-    "manifest-xdai": "scripts/build-manifest.sh xdai",
+    "manifest-goerli": "scripts/build-manifest.sh goerli",
+    "manifest-goerli-staging": "env STAGING=true scripts/build-manifest.sh goerli",
+    "manifest-gnosis": "scripts/build-manifest.sh gnosis",
     "manifest-polygon": "scripts/build-manifest.sh polygon",
-    "deploy-rinkeby": "scripts/deploy.sh rinkeby",
-    "deploy-rinkeby-staging": "env STAGING=true scripts/deploy.sh aragon agreement rinkeby",
-    "deploy-xdai": "scripts/deploy.sh xdai",
+    "deploy-goerli": "scripts/deploy.sh goerli",
+    "deploy-goerli-staging": "env STAGING=true scripts/deploy.sh aragon agreement goerli",
+    "deploy-gnosis": "scripts/deploy.sh gnosis",
     "deploy-polygon": "scripts/deploy.sh polygon"
   },
   "devDependencies": {
-    "@graphprotocol/graph-cli": "^0.19.0",
-    "@graphprotocol/graph-ts": "^0.19.0",
+    "@graphprotocol/graph-cli": "^0.39.0",
+    "@graphprotocol/graph-ts": "^0.29.3",
     "mustache": "^4.0.1"
   },
   "dependencies": {

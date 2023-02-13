@@ -1,6 +1,7 @@
 # Dependencies
 node_modules
-
+.yalc
+yalc.lock
 # coverage
 /coverage
 /coverageEnv

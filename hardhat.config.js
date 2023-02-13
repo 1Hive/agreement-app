@@ -4,6 +4,7 @@ require("@1hive/hardhat-aragon");
 require("@nomiclabs/hardhat-ethers");
 require("@nomiclabs/hardhat-truffle5");
 require("@nomiclabs/hardhat-web3");
+require("@nomiclabs/hardhat-etherscan");
 require("hardhat-deploy");
 require("hardhat-gas-reporter");
 require("solidity-coverage");
@@ -52,6 +53,12 @@ module.exports = {
     ],
     appBuildOutputPath: "public/",
   },
+  namedAccounts: {
+    deployer: {
+      default: 0,
+      1: 0,
+    },
+  },
   networks: {
     hardhat: {
       // process.env.HARDHAT_FORK will specify the network that the fork is made from.
@@ -90,6 +97,12 @@ module.exports = {
       accounts: accounts("xdai"),
       ensRegistry: "0xaafca6b0c89521752e559650206d7c925fd0e530",
     },
+    goerli: {
+      url: node_url("goerli"),
+      // accounts: accounts("goerli"),
+      accounts: [process.env.MNEMONIC],
+      ensRegistry: "0x8cf5a255ed61f403837f040b8d9f052857469273",
+    },
     polygon: {
       url: node_url("polygon"),
       accounts: accounts("polygon"),
@@ -117,6 +130,13 @@ module.exports = {
     pinata: {
       key: process.env.PINATA_KEY || "",
       secret: process.env.PINATA_SECRET_KEY || "",
+    },
+  },
+  etherscan: {
+    // Your API key for Etherscan
+    // Obtain one at https://etherscan.io/
+    apiKey: {
+      goerli: process.env.ETHERSCAN_API_KEY,
     },
   },
   gasReporter: {
