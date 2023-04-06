@@ -1,11 +1,19 @@
 type Agreement @entity {
+  "The unique identifier for this entity"
   id: ID!
+  "The Ethereum address of the DAO that made this agreement"
   dao: Bytes!
+  "The Ethereum address of the staking factory used by this agreement (optional)"
   stakingFactory: Bytes
+  "The Version entity representing the current version of this agreement"
   currentVersion: Version
+  "An array of Action objects associated with this agreement"
   actions: [Action!] @derivedFrom(field: "agreement")
+  "An array of Signer objects associated with this agreement"
   signers: [Signer!] @derivedFrom(field: "agreement")
+  "An array of Version objects associated with this agreement"
   versions: [Version!] @derivedFrom(field: "agreement")
+  "An array of Disputable objects associated with this agreement"
   disputables: [Disputable!] @derivedFrom(field: "agreement")
 }
 
@@ -19,120 +27,205 @@ enum ChallengeState {
 }
 
 type Signer @entity {
+  "The unique identifier for this entity"
   id: ID!
+  "The Agreement entity that this signer is associated with"
   agreement: Agreement!
+  "The Ethereum address of the signer"
   address: Bytes!
+  "An array of Action objects associated with this signer as a submitter"
   actions: [Action!] @derivedFrom(field: "submitter")
+  "An array of Signature objects associated with this signer as a signer"
   signatures: [Signature!] @derivedFrom(field: "signer")
 }
 
 type Signature @entity {
+  "The unique identifier for this entity"
   id: ID!
+  "The Signer entity associated with this signature"
   signer: Signer!
+  "The Version entity that was signed"
   version: Version!
+  "The timestamp indicating when this signature was created"
   createdAt: BigInt!
 }
 
 type Action @entity {
+  "The unique identifier for this entity"
   id: ID!
+  "The Agreement entity that this action is associated with"
   agreement: Agreement!
+  "The Disputable entity that this action is associated with"
   disputable: Disputable!
+  "The ID of this action"
   actionId: BigInt!
+  "The ID of the associated disputable action"
   disputableActionId: BigInt!
+  "Additional context information about this action"
   context: Bytes!
+  "Indicates whether this action has been closed"
   closed: Boolean!
+  "The Signer entity that submitted this action"
   submitter: Signer!
+  "The Version entity that this action is associated with"
   version: Version!
+  "The CollateralRequirement entity associated with this action"
   collateralRequirement: CollateralRequirement!
+  "The most recent Challenge entity associated with this action, if any"
   lastChallenge: Challenge
+  "An array of Challenge objects associated with this action"
   challenges: [Challenge!] @derivedFrom(field: "action")
+  "The timestamp indicating when this action was created"
   createdAt: BigInt!
 }
 
 type Challenge @entity {
+  "The unique identifier of the challenge"
   id: ID!
+  "The action this challenge is associated with"
   action: Action!
+  "The unique identifier of the challenge within the associated action"
   challengeId: BigInt!
+  "The context of the challenge"
   context: Bytes!
+  "The end date of the challenge"
   endDate: BigInt!
+  "The address of the challenger"
   challenger: Bytes!
+  "The settlement offer for the challenge"
   settlementOffer: BigInt!
+  "The state of the challenge"
   state: ChallengeState!
+  "The arbitrator fee paid by the submitter"
   submitterArbitratorFee: ArbitratorFee
+  "The arbitrator fee paid by the challenger"
   challengerArbitratorFee: ArbitratorFee!
+  "The dispute associated with the challenge"
   dispute: Dispute @derivedFrom(field: "challenge")
+  "The timestamp when the challenge was created"
   createdAt: BigInt!
 }
 
 type Dispute @entity {
+  "The ID of the dispute"
   id: ID!
+  "The ID of the dispute on-chain"
   disputeId: BigInt!
+  "The ruling of the dispute"
   ruling: BigInt!
+  "The challenge associated with this dispute"
   challenge: Challenge!
+  "Whether the submitter has finished submitting evidence"
   submitterFinishedEvidence: Boolean!
+  "Whether the challenger has finished submitting evidence"
   challengerFinishedEvidence: Boolean!
+  "The list of evidences associated with this dispute"
   evidences: [Evidence!] @derivedFrom(field: "dispute")
+  "The timestamp of when this dispute was created"
   createdAt: BigInt!
 }
 
 type Evidence @entity {
+  "The unique identifier of the evidence"
   id: ID!
+  "The dispute that this evidence is related to"
   dispute: Dispute!
+  "The data associated with this evidence"
   data: Bytes!
+  "The address of the submitter of this evidence"
   submitter: Bytes!
+  "The timestamp of when this evidence was created"
   createdAt: BigInt!
 }
 
 type Version @entity {
+  "Unique identifier for the Version entity"
   id: ID!
+  "Agreement this version belongs to"
   agreement: Agreement!
+  "Numeric identifier for this version"
   versionId: BigInt!
+  "Content of this version"
   content: Bytes!
+  "Title of this version"
   title: String!
+  "Address of the arbitrator"
   arbitrator: Bytes!
+  "Address of the app fees cashier"
   appFeesCashier: Bytes!
+  "Effective from timestamp"
   effectiveFrom: BigInt!
+  "Signatures associated with this version"
   signatures: [Signature!] @derivedFrom(field: "version")
 }
 
 type Disputable @entity {
+  "The unique identifier of the disputable"
   id: ID!
+  "The address of the disputable contract"
   address: Bytes!
+  "The agreement governing the disputable"
   agreement: Agreement!
+  "Whether the disputable is currently activated"
   activated: Boolean!
+  "The current collateral requirement for the disputable"
   currentCollateralRequirement: CollateralRequirement!
+  "The list of collateral requirements for the disputable"
   collateralRequirements: [CollateralRequirement!] @derivedFrom(field: "disputable")
+  "The list of actions associated with the disputable"
   actions: [Action!] @derivedFrom(field: "disputable")
 }
 
 type CollateralRequirement @entity {
+  "Unique identifier for the collateral requirement"
   id: ID!
+  "The disputable entity that this collateral requirement is associated with"
   disputable: Disputable!
+  "The ERC20 token required for collateral"
   token: ERC20!
+  "The duration of the challenge period"
   challengeDuration: BigInt!
+  "The amount of token required for each action"
   actionAmount: BigInt!
+  "The amount of token required for each challenge"
   challengeAmount: BigInt!
 }
 
 type Staking @entity {
+  "Unique identifier for the staking record"
   id: ID!
+  "User address associated with the staking record"
   user: Bytes!
+  "ERC20 token used for staking"
   token: ERC20!
+  "Amount of staked tokens available for use"
   available: BigInt!
+  "Amount of staked tokens currently locked in ongoing disputes"
   locked: BigInt!
+  "Amount of staked tokens currently challenged by other users"
   challenged: BigInt!
+  "Total amount of staked tokens (available + locked + challenged)"
   total: BigInt!
+  "List of staking movements associated with this staking record"
   movements: [StakingMovement!] @derivedFrom(field: "staking")
 }
 
 type StakingMovement @entity {
+  "Unique identifier for the staking movement"
   id: ID!
+  "The staking associated with this movement"
   staking: Staking!
+  "The amount of tokens involved in the movement"
   amount: BigInt!
+  "The agreement associated with the movement"
   agreement: Agreement!
+  "The action associated with the movement"
   action: Action!
+  "The state of the action in regards to staking"
   actionState: StakingActionState!
+  "The state of the staking collateral"
   collateralState: StakingCollateralState!
+  "The timestamp of when the staking movement was created"
   createdAt: BigInt!
 }
 
@@ -153,21 +246,32 @@ enum StakingActionState {
 }
 
 type ERC20 @entity {
+  "Unique identifier for the ERC20 token"
   id: ID!
+  "Name of the ERC20 token"
   name: String!
+  "Symbol of the ERC20 token"
   symbol: String!
+  "Number of decimal places used for the ERC20 token"
   decimals: Int!
 }
 
 type ArbitratorFee @entity {
+  "Unique identifier for the arbitrator fee"
   id: ID!
+  "The ERC20 token used to pay the arbitrator fee"
   token: ERC20!
+  "The amount of tokens to be paid to the arbitrator"
   amount: BigInt!
 }
 
 type AragonInfo @entity {
+  "Aragon info id"
   id: ID!
+  "Organization addresses"
   orgs: [Bytes!]!
+  "Apps addresses"
   apps: [Bytes!]!
+  "Token address"
   tokens: [Bytes!]!
 }
